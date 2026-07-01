@@ -1,176 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>I Have a Question...</title>
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #ffe6e6;
-            text-align: center;
-            overflow: hidden;
-        }
+<meta charset="UTF-8">
+<title>For Latiefa 💖</title>
 
-        .container {
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            max-width: 400px;
-            width: 85%;
-            z-index: 10;
-        }
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: white;
+  text-align: center;
+}
 
-        h1 {
-            color: #ff4d6d;
-            font-size: 2rem;
-            margin-bottom: 10px;
-            min-height: 60px;
-        }
+/* container */
+.box {
+  max-width: 500px;
+}
 
-        .status-text {
-            color: #555;
-            font-size: 1rem;
-            margin-bottom: 20px;
-            font-style: italic;
-            min-height: 20px;
-        }
+/* buttons */
+button {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 25px;
+  font-size: 18px;
+  cursor: pointer;
+  margin: 10px;
+  transition: 0.3s;
+}
 
-        .gif-container img {
-            width: 180px;
-            height: 180px;
-            object-fit: contain;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
+#yes {
+  background: #4CAF50;
+  color: white;
+}
 
-        .buttons {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            height: 50px;
-            position: relative;
-            margin-top: 20px;
-        }
+#maybe {
+  background: #ff9800;
+  color: white;
+  position: relative;
+}
 
-        button {
-            padding: 12px 30px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
+#no {
+  background: #ff4d4d;
+  color: white;
+}
 
-        #yesBtn {
-            background-color: #ff4d6d;
-            color: white;
-            transition: transform 0.2s ease;
-        }
+/* break animation */
+.break {
+  animation: shatter 0.6s forwards;
+}
 
-        #noBtn {
-            background-color: #777;
-            color: white;
-            position: absolute;
-        }
-    </style>
+@keyframes shatter {
+  0% { transform: scale(1) rotate(0deg); opacity: 1; }
+  100% {
+    transform: scale(0) rotate(720deg) translateY(200px);
+    opacity: 0;
+  }
+}
+
+/* yes screen */
+.red {
+  background: red !important;
+  transition: 1s;
+}
+
+/* hearts */
+.heart {
+  position: absolute;
+  color: white;
+  font-size: 18px;
+  animation: float 5s linear infinite;
+  opacity: 0.8;
+}
+
+@keyframes float {
+  from { transform: translateY(100vh); }
+  to { transform: translateY(-10vh); }
+}
+
+/* name overlay */
+.name {
+  position: absolute;
+  font-size: 30px;
+  font-weight: bold;
+  opacity: 0.3;
+  animation: fade 2s infinite alternate;
+}
+
+@keyframes fade {
+  from { opacity: 0.2; }
+  to { opacity: 0.6; }
+}
+</style>
 </head>
-<body>
 
-    <div class="container">
-        <div class="gif-container">
-            <img id="statusGif" src="https://media.giphy.com/media/c7ggb8e2HNG/giphy.gif" alt="Cute animation">
-        </div>
-        <h1 id="questionText">Will you be my girlfriend?</h1>
-        <div id="statusText" class="status-text">Think carefully... 😉</div>
-        
-        <div class="buttons">
-            <button id="yesBtn" onclick="selectYes()">Yes</button>
-            <button id="noBtn" onmouseover="moveNoButton()" onclick="moveNoButton()">No</button>
-        </div>
-    </div>
+<body id="body">
 
-    <script>
-        const noBtn = document.getElementById('noBtn');
-        const yesBtn = document.getElementById('yesBtn');
-        const questionText = document.getElementById('questionText');
-        const statusText = document.getElementById('statusText');
-        const statusGif = document.getElementById('statusGif');
+<div class="box" id="box">
+  <h1>Hey Latiefa 💖</h1>
+  <p>One last question...</p>
+  <h2>Will you be my girlfriend?</h2>
 
-        let noCount = 0;
-        
-        // Initial button layout positioning
-        noBtn.style.left = '140px'; 
-        noBtn.style.top = '0px';
+  <button id="yes" onclick="yes()">Yes 💕</button>
+  <button id="maybe" onclick="maybe()">Maybe 👀</button>
+  <button id="no">No 😭</button>
+</div>
 
-        // Funny messages that cycle as she tries to click No
-        const roastMessages = [
-            "Wait, you missed the button! Try again? 😂",
-            "Error 404: 'No' option not found. 🖥️",
-            "Are you sure? Click 'Yes' just to test it...",
-            "Wow, you're really trying hard to click that, huh? 🤔",
-            "My JavaScript code is stronger than your determination.",
-            "Legend says she is still trying to click No to this day..."
-        ];
+<script>
 
-        function moveNoButton() {
-            noCount++;
-            
-            // Phase 1: Mild confusion
-            if (noCount === 2) {
-                statusText.innerHTML = "Hey, why is the button moving? 🤨";
-                yesBtn.style.transform = "scale(1.1)"; // Yes button gets slightly bigger
-            } 
-            // Phase 2: Growing the Yes button aggressively
-            else if (noCount === 5) {
-                statusText.innerHTML = "Resistance is futile. Look how big 'Yes' is getting!";
-                yesBtn.style.transform = "scale(1.3)";
-                statusGif.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHI0ZWhndm93NDBoZWhndm93NDBoZWhndm93NDBoZWhndm93NDBoZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/du3J3cXyzhj75IOgvA/giphy.gif";
-            } 
-            // Phase 3: Total Roast mode
-            else if (noCount > 5) {
-                const randomMessage = roastMessages[Math.floor(Math.random() * roastMessages.length)];
-                statusText.innerHTML = `${randomMessage} (Missed count: ${noCount})`;
-                // Make Yes button massive
-                let currentScale = 1.3 + (noCount * 0.05);
-                yesBtn.style.transform = `scale(${Math.min(currentScale, 2.2)})`; 
-            }
+function maybe() {
+  let btn = document.getElementById("maybe");
 
-            // Calculate random jumping positions
-            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - 40);
-            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 40);
-            
-            noBtn.style.position = 'fixed';
-            noBtn.style.left = x + 'px';
-            noBtn.style.top = y + 'px';
-        }
+  // break effect
+  btn.classList.add("break");
 
-        // Final Phase: The Success Screen
-        function selectYes() {
-            questionText.innerHTML = "Yay! Best decision ever! ❤️";
-            
-            if (noCount > 0) {
-                statusText.innerHTML = `After failing to click No ${noCount} times, you finally saw the light! 🥰`;
-            } else {
-                statusText.innerHTML = "First try! You didn't even hesitate. Real one. 🥺❤️";
-            }
-            
-            statusGif.src = "https://media.giphy.com/media/KztT2c4Y8m7dxkW925/giphy.gif";
-            
-            // Hide the No button entirely
-            noBtn.style.display = 'none';
-            // Reset Yes button style
-            yesBtn.style.transform = "scale(1)";
-            yesBtn.removeAttribute("onclick");
-        }
-    </script>
+  setTimeout(() => {
+    btn.remove();
+  }, 600);
+}
+
+function yes() {
+  document.body.classList.add("red");
+
+  document.getElementById("box").innerHTML =
+    "<h1>❤️ She said YES ❤️</h1>";
+
+  startHearts();
+  startNames();
+}
+
+function startHearts() {
+  for (let i = 0; i < 40; i++) {
+    let h = document.createElement("div");
+    h.classList.add("heart");
+    h.innerHTML = "❤️";
+    h.style.left = Math.random() * 100 + "vw";
+    h.style.animationDuration = (3 + Math.random() * 3) + "s";
+    document.body.appendChild(h);
+
+    setTimeout(() => h.remove(), 6000);
+  }
+}
+
+function startNames() {
+  for (let i = 0; i < 20; i++) {
+    let n = document.createElement("div");
+    n.classList.add("name");
+    n.innerText = "Latiefa";
+    n.style.left = Math.random() * 100 + "vw";
+    n.style.top = Math.random() * 100 + "vh";
+    document.body.appendChild(n);
+  }
+}
+
+</script>
+
 </body>
 </html>
